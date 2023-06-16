@@ -14,7 +14,8 @@ namespace CharacterCustomizer.Core
         public enum CharacterGender
         {
             Male,
-            Female
+            Female,
+            Both
         }
 
         [System.Serializable]
@@ -32,7 +33,9 @@ namespace CharacterCustomizer.Core
             HandLeft,
             Hips,
             LegRight,
-            LegLeft
+            LegLeft,
+            Hairstyle,
+            Ears
 
         }
 
