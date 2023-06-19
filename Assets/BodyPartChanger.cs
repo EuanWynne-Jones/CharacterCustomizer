@@ -13,6 +13,8 @@ namespace CharacterCustomizer.Core
         public Slider hairstyleSlider = null;
         public Slider facialHairSlider = null;
         public Slider eyebrowsSlider = null;
+        public Slider paintColorSlider = null;
+        public Slider hairColorSlider = null;
 
         private DefaultBodyPartSetup setup;
 
@@ -21,26 +23,24 @@ namespace CharacterCustomizer.Core
             setup = FindObjectOfType<DefaultBodyPartSetup>();
         }
 
-        public void ChangeRace(Transform parent)
+        private void Start()
         {
-            foreach (Transform child in parent)
-            {
-                if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts))
-                {
-                    Material childInstancedMaterial = child.GetComponent<Renderer>().material;
-                    int colorIndex = (int)raceSlider.value;   
-                    Color raceBaseColor = setup.raceSkinColours[colorIndex];
-                    Color raceSecondaryColor = setup.secondaryRaceSkinColours[colorIndex];
-                    childInstancedMaterial.SetColor("_Color_Skin", raceBaseColor);
-                    childInstancedMaterial.SetColor("_Color_Stubble", raceSecondaryColor);
-                    if (!setup.isMale)
-                    {
-                        childInstancedMaterial.SetColor("_Color_Scar", raceSecondaryColor);
-                    }
+            PaintSliderEnabled();
+        }
 
-                }
-                ChangeRace(child);
-            }
+
+        public void ChangeRace()
+        {
+            ChangeSkinColour(setup.transform);
+            ChangeEars();
+        }
+        public void ChangePaint()
+        {
+            ChangeBodyPaintColor(setup.transform);
+        }
+        public void ChangeHair()
+        {
+            ChangeHairColour(setup.transform);
         }
 
         public void ChangeGender()
@@ -51,6 +51,7 @@ namespace CharacterCustomizer.Core
                 facialHairSlider.gameObject.SetActive(true);
                 ChangeHairstyle();
                 ChangeFace();
+                ChangeEars();
                 eyebrowsSlider.maxValue = 9f;
             }
             else
@@ -59,6 +60,7 @@ namespace CharacterCustomizer.Core
                 setup.EnableDefaultFemale();
                 ChangeHairstyle();
                 ChangeFace();
+                ChangeEars();
                 eyebrowsSlider.maxValue = 6f;
 
             }
@@ -87,6 +89,7 @@ namespace CharacterCustomizer.Core
             setup.maleFacialHair[((int)facialHairSlider.value)].gameObject.SetActive(true);
             setup.UpdateActivePieces(setup.transform, true);
         }
+
         public void ChangeFace()
         {
             foreach (GameObject activePiece in setup.currentlyActivePeices)
@@ -105,6 +108,7 @@ namespace CharacterCustomizer.Core
                 setup.femaleHeads[((int)faceSlider.value)].gameObject.SetActive(true);
             }
             setup.UpdateActivePieces(setup.transform, true);
+
         }
         public void ChangeEyebrows()
         {
@@ -125,6 +129,80 @@ namespace CharacterCustomizer.Core
                 setup.femaleBrows[((int)eyebrowsSlider.value)].gameObject.SetActive(true);
             }
             setup.UpdateActivePieces(setup.transform, true);
+        }
+
+
+        //Private functions that need parameters, public usable versions at top of script 
+        private void ChangeSkinColour(Transform parent)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts))
+                {
+                    Material childInstancedMaterial = child.GetComponent<Renderer>().material;
+                    int colorIndex = (int)raceSlider.value;   
+                    Color raceBaseColor = setup.raceSkinColours[colorIndex];
+                    Color raceSecondaryColor = setup.secondaryRaceSkinColours[colorIndex];
+                    Color raceTertiaryColor = setup.tertiaryRaceSkinColours[colorIndex];
+                    childInstancedMaterial.SetColor("_Color_Skin", raceBaseColor);
+                    childInstancedMaterial.SetColor("_Color_Stubble", raceSecondaryColor);
+                    childInstancedMaterial.SetColor("_Color_Scar", raceTertiaryColor);
+                    
+                }
+                ChangeSkinColour(child);
+            }
+            
+        }
+        private void ChangeBodyPaintColor(Transform parent)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts))
+                {
+                    Material childInstancedMaterial = child.GetComponent<Renderer>().material;
+                    int colorIndex = (int)paintColorSlider.value;
+                    Color paintColor = setup.paintColours[colorIndex];
+                    childInstancedMaterial.SetColor("_Color_BodyArt", paintColor);
+                }
+                ChangeBodyPaintColor(child);
+            }
+        }
+        private void ChangeHairColour(Transform parent)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts))
+                {
+                    Material childInstancedMaterial = child.GetComponent<Renderer>().material;
+                    int colorIndex = (int)hairColorSlider.value;
+                    Color hairColour = setup.hairColour[colorIndex];
+                    childInstancedMaterial.SetColor("_Color_Hair", hairColour);
+                }
+                ChangeHairColour(child);
+            }
+        }
+        private void ChangeEars()
+        {
+            foreach (GameObject activePiece in setup.currentlyActivePeices)
+            {
+                if (activePiece.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Ears)
+                {
+                    activePiece.SetActive(false);
+                }
+            }
+            setup.ears[((int)raceSlider.value)].gameObject.SetActive(true);
+            setup.UpdateActivePieces(setup.transform, true);
+        }
+        public void PaintSliderEnabled()
+        {
+            if (faceSlider.value < 8)
+            {
+                paintColorSlider.gameObject.SetActive(false);
+            }
+            else
+            {
+                paintColorSlider.gameObject.SetActive(true);
+            }
         }
     }
 }

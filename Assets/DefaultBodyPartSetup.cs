@@ -10,6 +10,10 @@ namespace CharacterCustomizer.Core
         [Header("Races")]
         public List<Color> raceSkinColours = new List<Color>();
         public List<Color> secondaryRaceSkinColours = new List<Color>();
+        public List<Color> tertiaryRaceSkinColours = new List<Color>();
+
+        [Header("Ears")]
+        public List<GameObject> ears = new List<GameObject>();
 
         [Header("Male")]
         public List<GameObject> maleHeads = new List<GameObject>();
@@ -43,16 +47,24 @@ namespace CharacterCustomizer.Core
         public List<GameObject> femaleLegRight = new List<GameObject>();
         public List<GameObject> femaleLegLeft = new List<GameObject>();
 
+
+
         [Header("Hair")]
         public List<GameObject> hairstyles = new List<GameObject>();
 
-        [Header("Ears")]
-        public List<GameObject> ears = new List<GameObject>();
+        [Header("HairColour")]
+        public List<Color> hairColour = new List<Color>();
+        public List<Color> stubbleColour = new List<Color>();
+
+        [Header("BodyPaint")]
+        public List<Color> paintColours = new List<Color>();
+
+
 
         [Header("ActivePieces")]
         public List<GameObject> currentlyActivePeices = new List<GameObject>();
 
-        [Header("MaterialOverrite")]
+        [Header("MaterialRefrence")]
         public Material reffenceMaterial = null;
 
         [HideInInspector] public bool isMale;
@@ -64,6 +76,10 @@ namespace CharacterCustomizer.Core
 
 
             BodyPartChanger bodyPartChanger = FindObjectOfType<BodyPartChanger>();
+            bodyPartChanger.ChangeHair();
+            bodyPartChanger.ChangePaint();
+            bodyPartChanger.ChangeRace();
+
 
         }
 
@@ -409,6 +425,7 @@ namespace CharacterCustomizer.Core
             maleLegLeft[0].gameObject.SetActive(true);
             maleLegRight[0].gameObject.SetActive(true);
             hairstyles[2].gameObject.SetActive(true);
+            ears[0].gameObject.SetActive(true);
         }
 
         private void EnableFemaleBodyParts()
@@ -426,7 +443,8 @@ namespace CharacterCustomizer.Core
             femaleLegRight[0].gameObject.SetActive(true);
             femaleLegLeft[0].gameObject.SetActive(true);
             hairstyles[0].gameObject.SetActive(true);
-            
+            ears[0].gameObject.SetActive(true);
+
         }
 
         private void DisableBodyParts(Transform parent)
