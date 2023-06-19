@@ -53,8 +53,8 @@ namespace CharacterCustomizer.Core
         public List<GameObject> hairstyles = new List<GameObject>();
 
         [Header("HairColour")]
-        public List<Color> hairColour = new List<Color>();
-        public List<Color> stubbleColour = new List<Color>();
+        public List<Color> hairColours = new List<Color>();
+        public List<Color> stubbleColours = new List<Color>();
 
         [Header("BodyPaint")]
         public List<Color> paintColours = new List<Color>();
@@ -76,6 +76,7 @@ namespace CharacterCustomizer.Core
 
 
             BodyPartChanger bodyPartChanger = FindObjectOfType<BodyPartChanger>();
+            bodyPartChanger.SetSliderMaxValues();
             bodyPartChanger.ChangeHair();
             bodyPartChanger.ChangePaint();
             bodyPartChanger.ChangeRace();

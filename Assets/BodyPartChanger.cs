@@ -28,6 +28,7 @@ namespace CharacterCustomizer.Core
             PaintSliderEnabled();
         }
 
+       
 
         public void ChangeRace()
         {
@@ -130,8 +131,35 @@ namespace CharacterCustomizer.Core
             }
             setup.UpdateActivePieces(setup.transform, true);
         }
+        public void SetSliderMaxValues()
+        {
+            raceSlider.maxValue = setup.raceSkinColours.Count - 1;
+            faceSlider.maxValue = setup.maleHeads.Count - 1;
+            hairstyleSlider.maxValue = setup.hairstyles.Count - 1;
+            facialHairSlider.maxValue = setup.maleFacialHair.Count - 1;
+            if (setup.isMale)
+            {
+                eyebrowsSlider.maxValue = setup.maleBrows.Count - 1;
 
-
+            }
+            else
+            {
+                eyebrowsSlider.maxValue = setup.femaleBrows.Count - 1;
+            }
+            paintColorSlider.maxValue = setup.paintColours.Count - 1;
+            hairColorSlider.maxValue = setup.hairColours.Count - 1;
+        }
+        public void PaintSliderEnabled()
+        {
+            if (faceSlider.value < 8)
+            {
+                paintColorSlider.gameObject.SetActive(false);
+            }
+            else
+            {
+                paintColorSlider.gameObject.SetActive(true);
+            }
+        }
         //Private functions that need parameters, public usable versions at top of script 
         private void ChangeSkinColour(Transform parent)
         {
@@ -175,7 +203,7 @@ namespace CharacterCustomizer.Core
                 {
                     Material childInstancedMaterial = child.GetComponent<Renderer>().material;
                     int colorIndex = (int)hairColorSlider.value;
-                    Color hairColour = setup.hairColour[colorIndex];
+                    Color hairColour = setup.hairColours[colorIndex];
                     childInstancedMaterial.SetColor("_Color_Hair", hairColour);
                 }
                 ChangeHairColour(child);
@@ -193,16 +221,6 @@ namespace CharacterCustomizer.Core
             setup.ears[((int)raceSlider.value)].gameObject.SetActive(true);
             setup.UpdateActivePieces(setup.transform, true);
         }
-        public void PaintSliderEnabled()
-        {
-            if (faceSlider.value < 8)
-            {
-                paintColorSlider.gameObject.SetActive(false);
-            }
-            else
-            {
-                paintColorSlider.gameObject.SetActive(true);
-            }
-        }
+       
     }
 }
