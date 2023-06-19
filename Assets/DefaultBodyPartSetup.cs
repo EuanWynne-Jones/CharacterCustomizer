@@ -9,6 +9,7 @@ namespace CharacterCustomizer.Core
 
         [Header("Races")]
         public List<Color> raceSkinColours = new List<Color>();
+        public List<Color> secondaryRaceSkinColours = new List<Color>();
 
         [Header("Male")]
         public List<GameObject> maleHeads = new List<GameObject>();
@@ -52,7 +53,7 @@ namespace CharacterCustomizer.Core
         public List<GameObject> currentlyActivePeices = new List<GameObject>();
 
         [Header("MaterialOverrite")]
-        public Material customMaterial = null;
+        public Material reffenceMaterial = null;
 
         [HideInInspector] public bool isMale;
         private void Start()
@@ -63,7 +64,6 @@ namespace CharacterCustomizer.Core
 
 
             BodyPartChanger bodyPartChanger = FindObjectOfType<BodyPartChanger>();
-            bodyPartChanger.ChangeRace(transform);
 
         }
 
@@ -465,7 +465,8 @@ namespace CharacterCustomizer.Core
             {
                 if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts))
                 {
-                    child.gameObject.GetComponent<Renderer>().material = customMaterial;
+                    Material instanceMaterial = Instantiate(reffenceMaterial);
+                    child.gameObject.GetComponent<Renderer>().material = instanceMaterial;
                 }
 
                 // Recursively call the method for each child

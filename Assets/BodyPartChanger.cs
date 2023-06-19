@@ -27,18 +27,22 @@ namespace CharacterCustomizer.Core
             {
                 if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts))
                 {
-                    Renderer renderer = child.gameObject.GetComponent<Renderer>();
-                    Material material = renderer.material;
+                    Material childInstancedMaterial = child.GetComponent<Renderer>().material;
+                    int colorIndex = (int)raceSlider.value;   
+                    Color raceBaseColor = setup.raceSkinColours[colorIndex];
+                    Color raceSecondaryColor = setup.secondaryRaceSkinColours[colorIndex];
+                    childInstancedMaterial.SetColor("_Color_Skin", raceBaseColor);
+                    childInstancedMaterial.SetColor("_Color_Stubble", raceSecondaryColor);
+                    if (!setup.isMale)
+                    {
+                        childInstancedMaterial.SetColor("_Color_Scar", raceSecondaryColor);
+                    }
 
-
-                    material.SetColor("_Colour_Skin", setup.raceSkinColours[((int)raceSlider.value)]);
-                    renderer.material = material;
                 }
-
-                // Recursively call the method for each child
                 ChangeRace(child);
             }
         }
+
         public void ChangeGender()
         {
             if(genderSlider.value == 0)

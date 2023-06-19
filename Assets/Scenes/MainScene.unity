@@ -64251,6 +64251,11 @@ MonoBehaviour:
   - {r: 0.7264151, g: 0.6606203, b: 0.41460484, a: 1}
   - {r: 0.3325472, g: 0.5, b: 0.3444493, a: 1}
   - {r: 0.5062343, g: 0.39822888, b: 0.5377358, a: 1}
+  secondaryRaceSkinColours:
+  - {r: 0.754717, g: 0.6779661, b: 0.5660378, a: 1}
+  - {r: 0.6792453, g: 0.615125, b: 0.3812745, a: 1}
+  - {r: 0.21337666, g: 0.3301887, b: 0.22152634, a: 1}
+  - {r: 0.39752325, g: 0.3063813, b: 0.4245283, a: 1}
   maleHeads: []
   maleBrows: []
   maleFacialHair: []
@@ -64279,7 +64284,7 @@ MonoBehaviour:
   hairstyles: []
   ears: []
   currentlyActivePeices: []
-  customMaterial: {fileID: 2100000, guid: c624a3d16e2ba1a43b8f5ff296ae5434, type: 2}
+  reffenceMaterial: {fileID: 2100000, guid: c624a3d16e2ba1a43b8f5ff296ae5434, type: 2}
   isMale: 0
 --- !u!1 &8799894670089332921
 GameObject:
