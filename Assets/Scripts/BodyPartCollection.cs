@@ -35,7 +35,8 @@ namespace CharacterCustomizer.Core
             LegRight,
             LegLeft,
             Hairstyle,
-            Ears
+            Ears,
+            Faceplate
 
         }
 

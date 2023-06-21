@@ -54,8 +54,13 @@ namespace CharacterCustomizer.Core
         [Header("BodyPaint")]
         public List<Color> paintColours = new List<Color>();
 
+        [Header("Faceplates")]
+        public GameObject maleFaceplate = null;
+        public GameObject femaleFaceplate = null;
+
         [Header("ActivePieces")]
         public List<GameObject> currentlyActivePeices = new List<GameObject>();
+
 
         [Header("MaterialRefrence")]
         public Material reffenceMaterial = null;
@@ -139,6 +144,7 @@ namespace CharacterCustomizer.Core
             GetNonGenderedBodyPieces(BodyPartCollection.BodyPieceType.Hairstyle, BodyPartCollection.CharacterGender.Both, hairstyles, transform);
             GetNonGenderedBodyPieces(BodyPartCollection.BodyPieceType.FacialHair, BodyPartCollection.CharacterGender.Male, maleFacialHair, transform);
             GetNonGenderedBodyPieces(BodyPartCollection.BodyPieceType.Ears, BodyPartCollection.CharacterGender.Both, ears, transform);
+
         }
         //Non-Gender specific function
         private void GetGenderedBodyPieces(BodyPartCollection.BodyPieceType bodyPieceType, BodyPartCollection.CharacterGender male, BodyPartCollection.CharacterGender female, List<GameObject> listToAddA, List<GameObject> listToAddB, Transform parent)
@@ -195,6 +201,7 @@ namespace CharacterCustomizer.Core
             maleLegRight[0].gameObject.SetActive(true);
             hairstyles[2].gameObject.SetActive(true);
             ears[0].gameObject.SetActive(true);
+            maleFaceplate.gameObject.SetActive(true);
         }
         private void EnableFemaleBodyParts()
         {
@@ -212,6 +219,7 @@ namespace CharacterCustomizer.Core
             femaleLegLeft[0].gameObject.SetActive(true);
             hairstyles[0].gameObject.SetActive(true);
             ears[0].gameObject.SetActive(true);
+            femaleFaceplate.gameObject.SetActive(true);
 
         }
         private void DisableBodyParts(Transform parent)

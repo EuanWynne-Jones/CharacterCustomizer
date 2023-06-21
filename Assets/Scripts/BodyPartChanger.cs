@@ -52,6 +52,7 @@ namespace CharacterCustomizer.Core
                 ChangeFace();
                 ChangeEars();
                 SetSliderMaxValues();
+                ChangeFaceplate();
             }
             else
             {
@@ -61,6 +62,21 @@ namespace CharacterCustomizer.Core
                 ChangeFace();
                 ChangeEars();
                 SetSliderMaxValues();
+                ChangeFaceplate();
+            }
+        }
+
+        public void ChangeFaceplate()
+        {
+            if (setup.isMale)
+            {
+                setup.femaleFaceplate.gameObject.SetActive(false);
+                setup.maleFaceplate.gameObject.SetActive(true);
+            }
+            else
+            {
+                setup.maleFaceplate.gameObject.SetActive(false);
+                setup.femaleFaceplate.gameObject.SetActive(true);
             }
         }
         public void ChangeHairstyle()
