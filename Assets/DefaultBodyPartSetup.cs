@@ -30,9 +30,6 @@ namespace CharacterCustomizer.Core
         public List<GameObject> maleLegRight = new List<GameObject>();
         public List<GameObject> maleLegLeft = new List<GameObject>();
 
-       
-
-
         [Header("Female")]
         public List<GameObject> femaleHeads = new List<GameObject>();
         public List<GameObject> femaleBrows = new List<GameObject>();
@@ -47,8 +44,6 @@ namespace CharacterCustomizer.Core
         public List<GameObject> femaleLegRight = new List<GameObject>();
         public List<GameObject> femaleLegLeft = new List<GameObject>();
 
-
-
         [Header("Hair")]
         public List<GameObject> hairstyles = new List<GameObject>();
 
@@ -59,8 +54,6 @@ namespace CharacterCustomizer.Core
         [Header("BodyPaint")]
         public List<Color> paintColours = new List<Color>();
 
-
-
         [Header("ActivePieces")]
         public List<GameObject> currentlyActivePeices = new List<GameObject>();
 
@@ -68,330 +61,22 @@ namespace CharacterCustomizer.Core
         public Material reffenceMaterial = null;
 
         [HideInInspector] public bool isMale;
+        [HideInInspector] public BodyPartChanger bodyPartChanger;
+
+        private void Awake()
+        {
+            bodyPartChanger = FindObjectOfType<BodyPartChanger>();
+        }
         private void Start()
         {
             GetAllBodyParts();
             UpdateCustomMaterial(transform);
             EnableDefaultMale();
-
-
-            BodyPartChanger bodyPartChanger = FindObjectOfType<BodyPartChanger>();
             bodyPartChanger.SetSliderMaxValues();
             bodyPartChanger.ChangeHair();
             bodyPartChanger.ChangePaint();
             bodyPartChanger.ChangeRace();
-
-
         }
-
-        private void GetAllBodyParts()
-        {
-            GetHeads(transform);
-            GetEyebrows(transform);
-            GetFacialHair(transform);
-            GetTorsos(transform);
-            GetArmsUpperRight(transform);
-            GetArmsLowerRight(transform);
-            GetArmsUpperLeft(transform);
-            GetArmsLowerLeft(transform);
-            GetRightHands(transform);
-            GetLeftHands(transform);
-            GetHips(transform);
-            GetRightLegs(transform);
-            GetLeftLegs(transform);
-            GetHairstyles(transform);
-            GetEars(transform);
-        }
-        // Non-Gender specific functions for getting all body parts that meet the enum requirments, adding each of these to respective lists above
-        private void GetHeads(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Head &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleHeads.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Head &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleHeads.Add(child.gameObject);
-                }
-
-                GetHeads(child);
-            }
-        }
-        private void GetEyebrows(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Eyebrows &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleBrows.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Eyebrows &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleBrows.Add(child.gameObject);
-                }
-
-                GetEyebrows(child);
-            }
-        }
-        private void GetFacialHair(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.FacialHair &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleFacialHair.Add(child.gameObject);
-                }
-
-
-                GetFacialHair(child);
-            }
-        }
-        private void GetTorsos(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Torso &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleTorsos.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Torso &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleTorso.Add(child.gameObject);
-                }
-
-                GetTorsos(child);
-            }
-        }
-        private void GetArmsUpperRight(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.ArmUpperRight &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleArmsUpperRight.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.ArmUpperRight &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleArmsUpperRight.Add(child.gameObject);
-                }
-
-                GetArmsUpperRight(child);
-            }
-        }
-        private void GetArmsLowerRight(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.ArmLowerRight &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleArmsLowerRight.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.ArmLowerRight &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleArmsLowerRight.Add(child.gameObject);
-                }
-
-                GetArmsLowerRight(child);
-            }
-        }
-        private void GetArmsUpperLeft(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.ArmUpperLeft &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleArmsUpperLeft.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.ArmUpperLeft &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleArmsUpperLeft.Add(child.gameObject);
-                }
-
-                GetArmsUpperLeft(child);
-            }
-        }
-        private void GetArmsLowerLeft(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.ArmLowerLeft &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleArmsLowerLeft.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.ArmLowerLeft &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleArmsLowerLeft.Add(child.gameObject);
-                }
-
-                GetArmsLowerLeft(child);
-            }
-        }
-        private void GetRightHands(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.HandRight &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleHandsRight.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.HandRight &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleHandsRight.Add(child.gameObject);
-                }
-
-                GetRightHands(child);
-            }
-        }
-        private void GetLeftHands(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.HandLeft &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleHandsLeft.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.HandLeft &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleHandsLeft.Add(child.gameObject);
-                }
-
-                GetLeftHands(child);
-            }
-        }
-        private void GetHips(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Hips &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleHips.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Hips &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleHips.Add(child.gameObject);
-                }
-
-                GetHips(child);
-            }
-        }
-        private void GetRightLegs(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.LegRight &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleLegRight.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.LegRight &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleLegRight.Add(child.gameObject);
-                }
-
-                GetRightLegs(child);
-            }
-        }
-        private void GetLeftLegs(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.LegLeft &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Male)
-                {
-                    maleLegLeft.Add(child.gameObject);
-                }
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.LegLeft &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Female)
-                {
-                    femaleLegLeft.Add(child.gameObject);
-                }
-
-                GetLeftLegs(child);
-            }
-        }
-        private void GetHairstyles(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Hairstyle &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Both)
-                {
-                    hairstyles.Add(child.gameObject);
-                }
-
-                GetHairstyles(child);
-            }
-        }
-        private void GetEars(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.GetComponent<BodyPartCollection>() != null &&
-                    child.GetComponent<BodyPartCollection>().bodyPieceType == BodyPartCollection.BodyPieceType.Ears &&
-                    child.GetComponent<BodyPartCollection>().gender == BodyPartCollection.CharacterGender.Both)
-                {
-                    ears.Add(child.gameObject);
-                }
-
-                GetEars(child);
-            }
-        }
-
-
-
-
-
-        [ContextMenu("EnableDefaultMale")]
         public void EnableDefaultMale()
         {
             isMale = true;
@@ -400,8 +85,6 @@ namespace CharacterCustomizer.Core
             UpdateActivePieces(transform,true);
 
         }
-
-        [ContextMenu("EnableDefaultFemale")]
         public void EnableDefaultFemale()
         {
             isMale = false;
@@ -409,7 +92,92 @@ namespace CharacterCustomizer.Core
             EnableFemaleBodyParts();
             UpdateActivePieces(transform,true);
         }
+        public void UpdateActivePieces(Transform parent, bool firstCall)
+        {
+            if (firstCall) currentlyActivePeices.Clear();
+            foreach (Transform child in parent)
+            {
+                if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts) && child.gameObject.activeInHierarchy)
+                {
+                    currentlyActivePeices.Add(child.gameObject);
+                }
 
+                // Recursively call the method for each child
+                UpdateActivePieces(child, false);
+            }
+        }
+        public void UpdateCustomMaterial(Transform parent)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts))
+                {
+                    Material instanceMaterial = Instantiate(reffenceMaterial);
+                    child.gameObject.GetComponent<Renderer>().material = instanceMaterial;
+                }
+
+                // Recursively call the method for each child
+                UpdateCustomMaterial(child);
+            }
+        }
+        private void GetAllBodyParts()
+        {
+            //Gender Specific BodyPiece Getter Functions
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.Head, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleHeads, femaleHeads, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.Torso, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleTorsos, femaleTorso, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.Eyebrows, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleBrows, femaleBrows, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.ArmUpperRight, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleArmsUpperRight, femaleArmsUpperRight, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.ArmLowerRight, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleArmsLowerRight, femaleArmsLowerRight, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.ArmUpperLeft, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleArmsUpperLeft, femaleArmsUpperLeft, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.ArmLowerLeft, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleArmsLowerLeft, femaleArmsLowerLeft, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.HandLeft, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleHandsLeft, femaleHandsLeft, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.HandRight, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleHandsRight, femaleHandsRight, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.Hips, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleHips, femaleHips, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.LegRight, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleLegRight, femaleLegRight, transform);
+            GetGenderedBodyPieces(BodyPartCollection.BodyPieceType.LegLeft, BodyPartCollection.CharacterGender.Male, BodyPartCollection.CharacterGender.Female, maleLegLeft, femaleLegLeft, transform);
+            //Non-Gender Specific BodyPiece Getter Functions
+            GetNonGenderedBodyPieces(BodyPartCollection.BodyPieceType.Hairstyle, BodyPartCollection.CharacterGender.Both, hairstyles, transform);
+            GetNonGenderedBodyPieces(BodyPartCollection.BodyPieceType.FacialHair, BodyPartCollection.CharacterGender.Male, maleFacialHair, transform);
+            GetNonGenderedBodyPieces(BodyPartCollection.BodyPieceType.Ears, BodyPartCollection.CharacterGender.Both, ears, transform);
+        }
+        //Non-Gender specific function
+        private void GetGenderedBodyPieces(BodyPartCollection.BodyPieceType bodyPieceType, BodyPartCollection.CharacterGender male, BodyPartCollection.CharacterGender female, List<GameObject> listToAddA, List<GameObject> listToAddB, Transform parent)
+        {
+            foreach (Transform child in parent)
+            {
+                BodyPartCollection bodyPartCollection = child.GetComponent<BodyPartCollection>();
+                if (bodyPartCollection != null &&
+                    bodyPartCollection.bodyPieceType == bodyPieceType &&
+                    bodyPartCollection.gender == male)
+                {
+                    listToAddA.Add(child.gameObject);
+                }
+                if (bodyPartCollection != null &&
+                    bodyPartCollection.bodyPieceType == bodyPieceType &&
+                    bodyPartCollection.gender == female)
+                {
+                    listToAddB.Add(child.gameObject);
+                }
+
+                GetGenderedBodyPieces(bodyPieceType,male,female,listToAddA,listToAddB,child);
+            }
+        }
+        //Gender specific function
+        private void GetNonGenderedBodyPieces(BodyPartCollection.BodyPieceType bodyPieceType, BodyPartCollection.CharacterGender gender, List<GameObject> listToAdd, Transform parent)
+        {
+            foreach (Transform child in parent)
+            {
+                BodyPartCollection bodyPartCollection = child.GetComponent<BodyPartCollection>();
+                if (bodyPartCollection != null &&
+                    bodyPartCollection.bodyPieceType == bodyPieceType &&
+                    bodyPartCollection.gender == gender)
+                {
+                    listToAdd.Add(child.gameObject);
+                }
+
+                GetNonGenderedBodyPieces(bodyPieceType, gender, listToAdd, child);
+            }
+        }
         private void EnableMaleBodyParts()
         {
             maleHeads[0].gameObject.SetActive(true);
@@ -428,7 +196,6 @@ namespace CharacterCustomizer.Core
             hairstyles[2].gameObject.SetActive(true);
             ears[0].gameObject.SetActive(true);
         }
-
         private void EnableFemaleBodyParts()
         {
             femaleHeads[0].gameObject.SetActive(true);
@@ -447,7 +214,6 @@ namespace CharacterCustomizer.Core
             ears[0].gameObject.SetActive(true);
 
         }
-
         private void DisableBodyParts(Transform parent)
         {
             foreach (Transform child in parent)
@@ -461,38 +227,6 @@ namespace CharacterCustomizer.Core
                 DisableBodyParts(child);
             }
         }
-
-
-        public void UpdateActivePieces(Transform parent, bool firstCall)
-        {
-            if (firstCall) currentlyActivePeices.Clear();
-            foreach (Transform child in parent)
-            {
-                if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts) && child.gameObject.activeInHierarchy)
-                {
-                    currentlyActivePeices.Add(child.gameObject);
-                }
-
-                // Recursively call the method for each child
-                UpdateActivePieces(child,false);
-            }
-        }
-
-        public void UpdateCustomMaterial(Transform parent)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.TryGetComponent<BodyPartCollection>(out BodyPartCollection bodyParts))
-                {
-                    Material instanceMaterial = Instantiate(reffenceMaterial);
-                    child.gameObject.GetComponent<Renderer>().material = instanceMaterial;
-                }
-
-                // Recursively call the method for each child
-                UpdateCustomMaterial(child);
-            }
-        }
-
     }
 
 }
